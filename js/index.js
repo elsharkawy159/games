@@ -59,6 +59,7 @@ function DisplayAllGames() {
         //Input
         input.addEventListener("input", ()=> {
             if (input.value == '') {
+                $(".loadingScreen").fadeIn(200)
                 $(".allGames").addClass("active")
                 DisplayAllGames()
             }else {
@@ -87,11 +88,17 @@ function DisplayAllGames() {
                 }
                 
                 gamesTable.innerHTML = game2
-
+                $(".loadingScreen").fadeOut(400)
+                var cards = document.querySelectorAll(".gamesTable .card");
+                for (let d = 0; d < cards.length; d++) {
+                    cards[d].addEventListener("click", ()=>{
+                        targetGameID = cards[d].id
+                        gameDetails(targetGameID)
+                    })
+                    
+                }
 
             }
-            // console.log(gamesArr[y].title);
-            
         }}
     })
         }
@@ -119,7 +126,7 @@ function displayGames(category) {
         
         xhrArr = JSON.parse(xhr.response)
         for (let k = 0; k < xhrArr.length; k++) {
-            game += `<div class="col-md-2">
+            game += `<div class="col-xxl-2 col-xl-3 col-md-4 col-sm-6">
             <div id="${xhrArr[k].id}" class="card shadow rounded-1 border-1">
             <img src="${xhrArr[k].thumbnail}" class="card-img-top" alt="...">
             <div class="card-body">
